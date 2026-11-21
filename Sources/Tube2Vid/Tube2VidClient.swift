@@ -8,7 +8,7 @@ public struct Tube2VidAPIError: Error, LocalizedError, Sendable {
     public let status: Int
     /// The API's `error` field, or the raw body.
     public let message: String
-    /// Machine-readable error code when the API sent one (e.g. "turnstile_failed").
+    /// Machine-readable error code when the API sent one (e.g. "captcha_failed").
     public let code: String?
     /// Raw response body.
     public let body: String?
@@ -34,7 +34,7 @@ public struct Tube2VidTimeoutError: Error, Sendable {
 /// Client for the Tube2Vid API (https://tube2vid.com/docs).
 public final class Tube2VidClient: Sendable {
     public static let defaultBaseURL = URL(string: "https://tube2vid.com")!
-    public static let version = "0.1.0"
+    public static let version = "0.2.0"
 
     public let baseURL: URL
     public let apiKey: String?
@@ -81,9 +81,7 @@ public final class Tube2VidClient: Sendable {
 
     public func getOperationalMetrics() async throws -> OperationalMetrics { try await get("/v1/ops/metrics") }
 
-    public func getPowChallenge() async throws -> PowChallenge { try await get("/v1/challenges/pow") }
-
-    /// Anonymous submission, as the website does it. Needs `pow` (and `turnstileToken` where the human check is on).
+    /// Anonymous submission, as the website does it. Needs a solved Atlas `captchaToken`; apps should call your own backend, which holds an API key.
     public func submitPublicJob(_ input: JobSubmitInput) async throws -> QueuedJobResponse {
         try await post("/v1/public/jobs", input)
     }

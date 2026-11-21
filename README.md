@@ -49,9 +49,9 @@ print(link)
 | `listAPIKeys` / `createAPIKey` | `/v1/api-keys` | `keys:read` / `keys:write` |
 | `createCheckout` | `POST /v1/billing/checkout` | `billing:write` |
 | `getHealth`, `listPlatforms`, `getPlatformHealth`, `getStatusHistory`, `getOperationalMetrics` | public | none |
-| `getPowChallenge`, `submitPublicJob`, `getPublicJobStatus`, `publicDownloadURL`, `publicThumbnailURL` | anonymous browser flow | none |
+| `submitPublicJob`, `getPublicJobStatus`, `publicDownloadURL`, `publicThumbnailURL` | anonymous browser flow | none |
 
-Without an API key, `submitJob` falls back to the anonymous `/v1/public/jobs` route, which needs a solved proof-of-work challenge. Apps that ship to users should call your own backend, which holds the key, rather than embedding a key in the app.
+Without an API key, `submitJob` falls back to the anonymous `/v1/public/jobs` route, which needs an Atlas captcha token solved in a browser. Apps that ship to users should call your own backend, which holds the key, rather than embedding a key in the app.
 
 ## Error handling
 

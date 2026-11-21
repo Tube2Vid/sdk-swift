@@ -81,20 +81,6 @@ public enum JSONValue: Codable, Hashable, Sendable {
     }
 }
 
-/// A solved challenge from `getPowChallenge()`. Only the anonymous browser flow needs it.
-public struct ProofOfWork: Codable, Hashable, Sendable {
-    public var nonce: String
-    public var expiresAt: String
-    public var difficulty: Int
-    public var signature: String
-    /// Any string such that sha256("nonce.expiresAt.difficulty.solution") starts with `difficulty` hex zeros.
-    public var solution: String
-
-    public init(nonce: String, expiresAt: String, difficulty: Int, signature: String, solution: String) {
-        self.nonce = nonce; self.expiresAt = expiresAt; self.difficulty = difficulty; self.signature = signature; self.solution = solution
-    }
-}
-
 public struct JobSubmitInput: Codable, Hashable, Sendable {
     public var url: String
     /// Force a platform slug instead of detecting it from the URL.
@@ -102,15 +88,13 @@ public struct JobSubmitInput: Codable, Hashable, Sendable {
     public var mode: JobMode?
     public var format: String?
     public var quality: String?
-    /// Browser-only human check; not needed with an API key.
-    public var turnstileToken: String?
-    /// Browser-only work challenge; not needed with an API key.
-    public var pow: ProofOfWork?
+    /// Browser flow only: an Atlas captcha token for the action "download"; not needed with an API key.
+    public var captchaToken: String?
 
     public init(url: String, platform: String? = nil, mode: JobMode? = nil, format: String? = nil, quality: String? = nil,
-                turnstileToken: String? = nil, pow: ProofOfWork? = nil) {
+                captchaToken: String? = nil) {
         self.url = url; self.platform = platform; self.mode = mode; self.format = format; self.quality = quality
-        self.turnstileToken = turnstileToken; self.pow = pow
+        self.captchaToken = captchaToken
     }
 }
 
@@ -268,13 +252,6 @@ public struct ServiceHealth: Codable, Hashable, Sendable {
     public var ok: Bool
     public var service: String
     public var time: String
-}
-
-public struct PowChallenge: Codable, Hashable, Sendable {
-    public var nonce: String
-    public var expiresAt: String
-    public var difficulty: Int
-    public var signature: String
 }
 
 public struct APIKeyCreateInput: Codable, Hashable, Sendable {
