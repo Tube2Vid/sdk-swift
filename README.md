@@ -19,7 +19,7 @@ In `Package.swift`:
 .product(name: "Tube2Vid", package: "sdk-swift")
 ```
 
-Or in Xcode: File > Add Package Dependencies, then paste `https://github.com/Tube2Vid/sdk-swift`. Needs Swift 5.10+, iOS 15 / macOS 12 / tvOS 15 / watchOS 8 / visionOS 1, or Linux. [Get an API key](https://tube2vid.com/pricing).
+Or in Xcode: File > Add Package Dependencies, then paste `https://github.com/Tube2Vid/sdk-swift`. Needs Swift 5.10+, iOS 15 / macOS 12 / tvOS 15 / watchOS 8 / visionOS 1, or Linux with Swift 6.0+. [Get an API key](https://tube2vid.com/pricing).
 
 ## Quickstart
 
